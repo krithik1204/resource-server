@@ -12,3 +12,4 @@ bin/
 
 # Logs
 *.log
+.vscode/*
