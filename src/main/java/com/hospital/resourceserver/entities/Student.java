@@ -10,14 +10,12 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
-    private String gender;
-    private LocalDate dateOfBirth;
+    @Column
     private String className;
+    @Column
     private String section;
+    @Column(unique = true, nullable = false)
+    private String student_id;
 
     @OneToOne
     @JoinColumn(name = "user_id")

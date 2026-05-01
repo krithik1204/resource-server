@@ -9,11 +9,8 @@ public class Teacher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String subject;
-    private int experience;
+    @Column(unique = true, nullable = false)
+    private String employeeId;
 
     @OneToOne
     @JoinColumn(name = "user_id")

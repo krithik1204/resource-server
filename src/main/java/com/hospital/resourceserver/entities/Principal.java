@@ -9,7 +9,8 @@ public class Principal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @Column(unique = true, nullable = false)
+    private String employeeId;
 
     @OneToOne
     @JoinColumn(name = "user_id")
