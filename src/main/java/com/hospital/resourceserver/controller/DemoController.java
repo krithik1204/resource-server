@@ -13,9 +13,40 @@ public class DemoController {
     public String publicApi() {
         return "Public API";
     }
+    
+    @GetMapping("/debug/auth")
+    public Object debug(Authentication auth) {
+        return auth;
+    }
 
     @GetMapping("/profile")
     public UserProfileResponse profile(Authentication authentication) {
+        Jwt jwt = (Jwt) authentication.getPrincipal();
+        Long userId = Long.parseLong(jwt.getSubject());
+        String email = jwt.getClaimAsString("email");
+
+        return new UserProfileResponse(
+            userId,
+            email,
+            "User profile retrieved successfully"
+        );
+    }
+    
+    @GetMapping("/teacher")
+    public UserProfileResponse teacher(Authentication authentication) {
+        Jwt jwt = (Jwt) authentication.getPrincipal();
+        Long userId = Long.parseLong(jwt.getSubject());
+        String email = jwt.getClaimAsString("email");
+
+        return new UserProfileResponse(
+            userId,
+            email,
+            "User profile retrieved successfully"
+        );
+    }
+    
+    @GetMapping("/both")
+    public UserProfileResponse both(Authentication authentication) {
         Jwt jwt = (Jwt) authentication.getPrincipal();
         Long userId = Long.parseLong(jwt.getSubject());
         String email = jwt.getClaimAsString("email");
