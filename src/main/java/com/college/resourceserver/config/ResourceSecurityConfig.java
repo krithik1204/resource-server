@@ -28,7 +28,8 @@ public class ResourceSecurityConfig {
             		.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/api/public/**",
                                  "/api/profile/public/**",
-                                 "/api/debug/**").permitAll()
+                                 "/api/debug/**", "/swagger-ui/**",
+                                 "/v3/api-docs/**").permitAll()
 
                 // USER endpoints
                 .requestMatchers("/api/profile/**").hasRole("STUDENT")
