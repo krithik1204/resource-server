@@ -1,9 +1,10 @@
-package com.hospital.resourceserver.controller;
+package com.college.resourceserver.controller;
 
-import com.hospital.resourceserver.dto.UserProfileResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+
+import com.college.resourceserver.dto.UserProfileResponse;
 
 @RestController
 @RequestMapping("/api")

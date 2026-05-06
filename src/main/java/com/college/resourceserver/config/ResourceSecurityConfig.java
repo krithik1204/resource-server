@@ -1,4 +1,4 @@
-package com.hospital.resourceserver.config;
+package com.college.resourceserver.config;
 
 import java.util.List;
 

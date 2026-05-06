@@ -1,4 +1,4 @@
-package com.hospital.resourceserver;
+package com.college.resourceserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

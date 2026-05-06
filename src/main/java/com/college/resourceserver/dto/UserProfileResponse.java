@@ -1,4 +1,4 @@
-package com.hospital.resourceserver.dto;
+package com.college.resourceserver.dto;
 
 public class UserProfileResponse {
     private Long id;
