@@ -5,8 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.college.resourceserver.dto.UserCreateRequest;
+import com.college.resourceserver.dto.UserResponse;
+import com.college.resourceserver.dto.UserUpdateRequest;
 import com.college.resourceserver.entities.Role;
 import com.college.resourceserver.entities.User;
+import com.college.resourceserver.mapper.EntityDtoMapper;
 import com.college.resourceserver.repository.RoleRepository;
 import com.college.resourceserver.repository.UserRepository;
 import com.college.resourceserver.service.UserService;
@@ -20,17 +24,54 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	RoleRepository roleRepository;
 
+	@Autowired
+	EntityDtoMapper entityDtoMapper;
+
 	@Override
-	public List<User> findUsersWithoutRoles() {
-		// TODO Auto-generated method stub
-		return userRepository.findUsersWithoutRoles();
+	public List<UserResponse> findUsersWithoutRoles() {
+		List<User> users = userRepository.findUsersWithoutRoles();
+		return entityDtoMapper.toUserResponseList(users);
+	}
+
+	@Override
+	public UserResponse createUser(UserCreateRequest request) {
+		User user = entityDtoMapper.toUserEntity(request);
+		User savedUser = userRepository.save(user);
+		return entityDtoMapper.toUserResponse(savedUser);
+	}
+
+	@Override
+	public UserResponse updateUser(Long userId, UserUpdateRequest request) {
+		User user = userRepository.findById(userId)
+				.orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+		
+		entityDtoMapper.updateUserEntity(request, user);
+		User updatedUser = userRepository.save(user);
+		return entityDtoMapper.toUserResponse(updatedUser);
+	}
+
+	@Override
+	public UserResponse getUserById(Long userId) {
+		User user = userRepository.findById(userId)
+				.orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+		return entityDtoMapper.toUserResponse(user);
+	}
+
+	@Override
+	public List<UserResponse> getAllUsers() {
+		List<User> users = userRepository.findAll();
+		return entityDtoMapper.toUserResponseList(users);
+	}
+
+	@Override
+	public void deleteUser(Long userId) {
+		User user = userRepository.findById(userId)
+				.orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+		userRepository.delete(user);
 	}
 
 	@Override
 	public void assignRole(Long userId, Long roleId) {
-		// TODO Auto-generated method stub
-		System.out.println("user role>>"+userId);
-		System.out.println("Role role>>"+roleId);
 	    User user = userRepository.findById(userId)
 	            .orElseThrow(() -> new RuntimeException("User not found"));
 

@@ -2,14 +2,17 @@ package com.college.resourceserver.service;
 
 import java.util.List;
 
-import com.college.resourceserver.entities.Role;
+import com.college.resourceserver.dto.RoleCreateRequest;
+import com.college.resourceserver.dto.RoleResponse;
 
 public interface RoleService {
 
-	public List<Role> getRoles();
+	List<RoleResponse> getRoles();
 
-	public Role addRole(Role role);
+	RoleResponse addRole(RoleCreateRequest request);
 
-	
-	
+	RoleResponse getRoleById(Long roleId);
+
+	void deleteRole(Long roleId);
+
 }

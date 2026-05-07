@@ -3,17 +3,17 @@ package com.college.resourceserver.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.college.resourceserver.dto.AssignRoleRequest;
-import com.college.resourceserver.entities.User;
+import com.college.resourceserver.dto.UserCreateRequest;
+import com.college.resourceserver.dto.UserResponse;
+import com.college.resourceserver.dto.UserUpdateRequest;
 import com.college.resourceserver.service.UserService;
+import jakarta.validation.Valid;
 
 
 
@@ -25,22 +25,46 @@ public class UserController {
 	UserService userService;
 
 	@GetMapping("/users")
-	public List<User> getAllUsersWithOutRole() {
-	
-	return	userService.findUsersWithoutRoles();
-	
+	public ResponseEntity<List<UserResponse>> getAllUsersWithOutRole() {
+		List<UserResponse> users = userService.findUsersWithoutRoles();
+		return ResponseEntity.ok(users);
+	}
+
+	@GetMapping("/users/{id}")
+	public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
+		UserResponse user = userService.getUserById(id);
+		return ResponseEntity.ok(user);
+	}
+
+	@GetMapping("/users/all")
+	public ResponseEntity<List<UserResponse>> getAllUsers() {
+		List<UserResponse> users = userService.getAllUsers();
+		return ResponseEntity.ok(users);
+	}
+
+	@PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserCreateRequest request) {
+		UserResponse user = userService.createUser(request);
+		return ResponseEntity.status(HttpStatus.CREATED).body(user);
+	}
+
+	@PutMapping(value = "/users/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateRequest request) {
+		UserResponse user = userService.updateUser(id, request);
+		return ResponseEntity.ok(user);
+	}
+
+	@DeleteMapping("/users/{id}")
+	public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+		userService.deleteUser(id);
+		return ResponseEntity.noContent().build();
 	}
 	
-	@PostMapping(value="/users/{id}/role",consumes = MediaType.APPLICATION_JSON_VALUE)
-	public List<User> assignUserRole(@PathVariable Long id,@RequestBody AssignRoleRequest role) {
-		
-		System.out.println("Role is >>>"+role);
-	System.out.println("Role is id>>>"+role.roleId());
-	System.out.println("User is id>>>"+id);
-	userService.assignRole(Long.valueOf(id), role.roleId());
-	
-	return	userService.findUsersWithoutRoles();
-	
+	@PostMapping(value="/users/{id}/role", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<UserResponse>> assignUserRole(@PathVariable Long id, @RequestBody AssignRoleRequest role) {
+		userService.assignRole(id, role.roleId());
+		List<UserResponse> users = userService.findUsersWithoutRoles();
+		return ResponseEntity.ok(users);
 	}
 	
 }

@@ -8,7 +8,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "faculty")
 public class Faculty {
@@ -23,4 +25,5 @@ private User user;
 @JoinColumn(name = "department_id")
 private Department department;
 
-private String designation;}
+private String designation;
+}
