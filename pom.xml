@@ -110,7 +110,7 @@
                 </configuration>
             </plugin>
 
-    <!--        <plugin>
+            <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
                 <version>7.6.0</version>
@@ -122,19 +122,22 @@
                         </goals>
 
                         <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/api.yml</inputSpec>
+                            <inputSpec>${project.basedir}/src/main/resources/api-docs.yaml</inputSpec>
                             <generatorName>spring</generatorName>
 
                             <modelPackage>com.college.resourceserver.model</modelPackage>
                             <apiPackage>com.college.resourceserver.api</apiPackage>
 
                             <generateApis>false</generateApis>
-                            <generateModels>true</generateModels>
+                            <generateModels>false</generateModels>
 
                             
                             <additionalProperties>
                                 <useJakartaEe>true</useJakartaEe>
                                 <useBeanValidation>true</useBeanValidation>
+                                <lombokDataAnnotation>true</lombokDataAnnotation>
+                                <lombokBuilderAnnotation>true</lombokBuilderAnnotation>
+                                <useRecords>true</useRecords>
                             </additionalProperties>
 
                             <configOptions>
@@ -146,7 +149,7 @@
                     </execution>
                 </executions>
             </plugin>
- --> 
+  
         </plugins>
     </build>
 
