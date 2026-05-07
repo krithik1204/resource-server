@@ -37,6 +37,8 @@ public class ResourceSecurityConfig {
                 // TEACHER endpoints
               //  .requestMatchers("/api/teacher/**").hasRole("TEACHER")
                 .requestMatchers("/api/teacher/**").hasAuthority("ROLE_TEACHER")
+           
+                  .requestMatchers("/api/roles","/api/users","/api/users/**").hasAuthority("ROLE_ADMIN")
 
                 // mixed access
                 .requestMatchers("/api/both/**").hasAnyRole("USER", "TEACHER")
