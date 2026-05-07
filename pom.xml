@@ -129,7 +129,7 @@
                             <apiPackage>com.college.resourceserver.api</apiPackage>
 
                             <generateApis>false</generateApis>
-                            <generateModels>false</generateModels>
+                            <generateModels>true</generateModels>
 
                             
                             <additionalProperties>
