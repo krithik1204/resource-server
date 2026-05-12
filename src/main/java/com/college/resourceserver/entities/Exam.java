@@ -20,6 +20,8 @@ public class Exam {
 private Long id;
 private String name;
 private LocalDateTime examDate;
+private Integer duration; // in minutes
+private Double totalMarks;
 
 @ManyToOne
 @JoinColumn(name = "course_id")

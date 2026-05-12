@@ -45,6 +45,8 @@ public class ExamServiceImpl implements ExamService {
         Exam exam = new Exam();
         exam.setName(request.getName());
         exam.setExamDate(request.getExamDate());
+        exam.setDuration(request.getDuration());
+        exam.setTotalMarks(request.getTotalMarks());
         exam.setCourse(course);
         
         Exam savedExam = examRepository.save(exam);
@@ -61,6 +63,12 @@ public class ExamServiceImpl implements ExamService {
         }
         if (request.getExamDate() != null) {
             exam.setExamDate(request.getExamDate());
+        }
+        if (request.getDuration() != null) {
+            exam.setDuration(request.getDuration());
+        }
+        if (request.getTotalMarks() != null) {
+            exam.setTotalMarks(request.getTotalMarks());
         }
         if (request.getCourseId() != null) {
             Course course = courseRepository.findById(request.getCourseId())

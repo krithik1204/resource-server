@@ -14,6 +14,8 @@ public class ExamResponse {
     private Long id;
     private String name;
     private LocalDateTime examDate;
+    private Integer duration; // in minutes
+    private Double totalMarks;
     private String course;
     private Long courseId;
 }

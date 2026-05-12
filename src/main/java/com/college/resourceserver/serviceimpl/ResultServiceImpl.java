@@ -82,4 +82,10 @@ public class ResultServiceImpl implements ResultService {
                 .orElseThrow(() -> new RuntimeException("Result not found with id: " + resultId));
         resultRepository.delete(result);
     }
+    
+    @Override
+    public List<ResultResponse> getResultsByStudentId(Long studentId) {
+        List<Result> results = resultRepository.findByStudentId(studentId);
+        return entityDtoMapper.toResultResponseList(results);
+    }
 }

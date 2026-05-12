@@ -34,11 +34,54 @@ public class ResourceSecurityConfig {
                 // USER endpoints
                 .requestMatchers("/api/profile/**").hasRole("STUDENT")
 
+                // TEACHER/FACULTY endpoints - Mark attendance
+                .requestMatchers(HttpMethod.POST, "/api/attendance").hasAnyAuthority("ROLE_TEACHER", "ROLE_FACULTY")
+                .requestMatchers(HttpMethod.PUT, "/api/attendance/**").hasAnyAuthority("ROLE_TEACHER", "ROLE_FACULTY")
+
+                // PRINCIPAL endpoints - Create exams
+                .requestMatchers(HttpMethod.POST, "/api/exams").hasAuthority("ROLE_PRINCIPAL")
+                .requestMatchers(HttpMethod.PUT, "/api/exams/**").hasAuthority("ROLE_PRINCIPAL")
+                .requestMatchers(HttpMethod.DELETE, "/api/exams/**").hasAuthority("ROLE_PRINCIPAL")
+
+                // ADMIN endpoints
+                .requestMatchers("/api/roles","/api/users/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/departments").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/departments/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/departments/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/courses").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/courses/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/courses/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/results").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/results/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/results/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/students").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/students/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/students/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/faculties").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/faculties/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/faculties/**").hasAuthority("ROLE_ADMIN")
+
+                // EVENTS endpoints
+                .requestMatchers(HttpMethod.POST, "/api/events").hasAnyAuthority("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_PRINCIPAL")
+                .requestMatchers(HttpMethod.PUT, "/api/events/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_PRINCIPAL")
+                .requestMatchers(HttpMethod.DELETE, "/api/events/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_PRINCIPAL")
+
+                // COMPLAINTS endpoints
+                .requestMatchers(HttpMethod.POST, "/api/complaints").hasAuthority("ROLE_STUDENT")
+                .requestMatchers(HttpMethod.PUT, "/api/complaints/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_ADMIN", "ROLE_PRINCIPAL")
+                .requestMatchers(HttpMethod.DELETE, "/api/complaints/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_PRINCIPAL")
+
+                // ANNOUNCEMENTS endpoints
+                .requestMatchers(HttpMethod.POST, "/api/announcements").hasAnyAuthority("ROLE_ADMIN", "ROLE_PRINCIPAL")
+                .requestMatchers(HttpMethod.PUT, "/api/announcements/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_PRINCIPAL")
+                .requestMatchers(HttpMethod.DELETE, "/api/announcements/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_PRINCIPAL")
+
                 // TEACHER endpoints
               //  .requestMatchers("/api/teacher/**").hasRole("TEACHER")
                 .requestMatchers("/api/teacher/**").hasAuthority("ROLE_TEACHER")
            
-                  .requestMatchers("/api/roles","/api/users","/api/users/**").hasAuthority("ROLE_ADMIN")
+                // GET endpoints - All authenticated users can read
+                .requestMatchers(HttpMethod.GET, "/api/**").authenticated()
 
                 // mixed access
                 .requestMatchers("/api/both/**").hasAnyRole("USER", "TEACHER")

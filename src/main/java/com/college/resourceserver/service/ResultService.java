@@ -15,4 +15,6 @@ public interface ResultService {
     ResultResponse updateResult(Long resultId, ResultCreateRequest request);
     
     void deleteResult(Long resultId);
+    
+    List<ResultResponse> getResultsByStudentId(Long studentId);
 }

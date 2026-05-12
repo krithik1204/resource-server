@@ -82,4 +82,10 @@ public class AttendanceServiceImpl implements AttendanceService {
                 .orElseThrow(() -> new RuntimeException("Attendance not found with id: " + attendanceId));
         attendanceRepository.delete(attendance);
     }
+    
+    @Override
+    public List<AttendanceResponse> getAttendanceByStudentId(Long studentId) {
+        List<Attendance> attendances = attendanceRepository.findByStudentId(studentId);
+        return entityDtoMapper.toAttendanceResponseList(attendances);
+    }
 }

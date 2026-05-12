@@ -21,4 +21,8 @@ public class ExamCreateRequest {
     
     @NotNull(message = "Course ID is required")
     private Long courseId;
+    
+    private Integer duration; // in minutes
+    
+    private Double totalMarks;
 }

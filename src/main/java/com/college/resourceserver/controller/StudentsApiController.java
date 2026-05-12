@@ -7,7 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.college.resourceserver.dto.StudentCreateRequest;
 import com.college.resourceserver.dto.StudentResponse;
+import com.college.resourceserver.dto.AttendanceResponse;
+import com.college.resourceserver.dto.ResultResponse;
 import com.college.resourceserver.service.StudentService;
+import com.college.resourceserver.service.AttendanceService;
+import com.college.resourceserver.service.ResultService;
 import jakarta.validation.Valid;
 
 @RestController
@@ -16,6 +20,12 @@ public class StudentsApiController {
     
     @Autowired
     StudentService studentService;
+    
+    @Autowired
+    AttendanceService attendanceService;
+    
+    @Autowired
+    ResultService resultService;
     
     @GetMapping
     public ResponseEntity<List<StudentResponse>> getAllStudents() {
@@ -45,6 +55,24 @@ public class StudentsApiController {
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.noContent().build();
+    }
+    
+    /**
+     * Get attendance records for a student
+     */
+    @GetMapping("/{studentId}/attendance")
+    public ResponseEntity<List<AttendanceResponse>> getStudentAttendance(@PathVariable Long studentId) {
+        List<AttendanceResponse> attendances = attendanceService.getAttendanceByStudentId(studentId);
+        return ResponseEntity.ok(attendances);
+    }
+    
+    /**
+     * Get exam results/transcript for a student
+     */
+    @GetMapping("/{studentId}/results")
+    public ResponseEntity<List<ResultResponse>> getStudentResults(@PathVariable Long studentId) {
+        List<ResultResponse> results = resultService.getResultsByStudentId(studentId);
+        return ResponseEntity.ok(results);
     }
 }
 
