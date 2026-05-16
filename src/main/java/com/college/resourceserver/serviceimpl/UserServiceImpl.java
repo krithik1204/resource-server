@@ -11,6 +11,7 @@ import com.college.resourceserver.dto.UserUpdateRequest;
 import com.college.resourceserver.entities.Role;
 import com.college.resourceserver.entities.User;
 import com.college.resourceserver.mapper.EntityDtoMapper;
+import com.college.resourceserver.projection.TeacherProjection;
 import com.college.resourceserver.repository.RoleRepository;
 import com.college.resourceserver.repository.UserRepository;
 import com.college.resourceserver.service.UserService;
@@ -80,6 +81,12 @@ public class UserServiceImpl implements UserService {
 	    
 	    user.getRoles().add(role);
 	    userRepository.save(user);
+	}
+
+	@Override
+	public List<TeacherProjection> getTeachers() {
+		// TODO Auto-generated method stub
+		return userRepository.getTeachers();
 	}
 
 }

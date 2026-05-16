@@ -12,6 +12,7 @@ import com.college.resourceserver.dto.AssignRoleRequest;
 import com.college.resourceserver.dto.UserCreateRequest;
 import com.college.resourceserver.dto.UserResponse;
 import com.college.resourceserver.dto.UserUpdateRequest;
+import com.college.resourceserver.projection.TeacherProjection;
 import com.college.resourceserver.service.UserService;
 import jakarta.validation.Valid;
 
@@ -65,6 +66,13 @@ public class UserController {
 		userService.assignRole(id, role.roleId());
 		List<UserResponse> users = userService.findUsersWithoutRoles();
 		return ResponseEntity.ok(users);
+	}
+	
+	@GetMapping(value="/users/faculty", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TeacherProjection>> getTeachers() {
+		System.out.println("from Teachers");
+		List<TeacherProjection> list=	userService.getTeachers();
+		return ResponseEntity.ok(list);
 	}
 	
 }

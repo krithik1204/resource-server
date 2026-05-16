@@ -58,8 +58,11 @@ public class ResourceSecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/api/students/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/students/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/faculties").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.GET, "/api/faculties").hasAuthority("ROLE_ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/api/faculties/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/faculties/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.GET, "/api/faculties/users").hasAuthority("ROLE_ADMIN")
+                
 
                 // EVENTS endpoints
                 .requestMatchers(HttpMethod.POST, "/api/events").hasAnyAuthority("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_PRINCIPAL")
